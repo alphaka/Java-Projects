@@ -1,0 +1,85 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.event.*;
+
+public class slidersCalculator extends JFrame implements
+        ChangeListener, ActionListener{
+
+    private JSlider slider1, slider2;
+    private JTextField text1, text2, text3;
+    private JRadioButton nothing, sum, product;
+    
+    public slidersCalculator() {
+        setTitle("GUI");
+        setSize(500, 500);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
+        setLayout(new GridLayout(3,3));
+        slider1 = new JSlider(SwingConstants.VERTICAL, 0, 100, 0);
+        slider2 = new JSlider(SwingConstants.VERTICAL, 0, 100, 0);
+        
+        text1 = new JTextField("");
+        text2 = new JTextField("");
+        text3 = new JTextField("");
+        
+        text1.setEditable(false);
+        text2.setEditable(false);
+        text3.setEditable(false);
+        
+        nothing = new JRadioButton("nothing");
+        sum = new JRadioButton("sum");
+        product = new JRadioButton("product");
+        
+        ButtonGroup group = new ButtonGroup();
+        group.add(nothing);
+        group.add(sum);
+        group.add(product);
+        
+        slider1.addChangeListener(this);
+        slider2.addChangeListener(this);
+        
+        nothing.addActionListener(this);
+        sum.addActionListener(this);
+        product.addActionListener(this);
+        
+        add(text1);
+        add(nothing);
+        add(text2);
+        add(slider1);
+        add(sum);
+        add(slider2);
+        add(text3);
+        add(product);
+        
+        setVisible(true);
+        
+    }
+    
+    public void actionPerformed(ActionEvent e) {
+        int sli1 = slider1.getValue();
+        int sli2 = slider2.getValue();
+        JRadioButton selected = (JRadioButton)e.getSource();
+            if(selected == nothing) {
+                text3.setText("");
+            }
+            else if(selected == sum) {
+                text3.setText(Integer.toString(sli1+sli2));
+            }
+            else if(selected == product) {
+                text3.setText(Integer.toString(sli1*sli2));
+            }
+        }
+    
+    public void stateChanged(ChangeEvent e){
+        text1.setText(Integer.toString(slider1.getValue()));
+        text2.setText(Integer.toString(slider2.getValue()));
+    }
+    
+    public static void main(String[] args) {
+        
+        new slidersCalculator();
+        
+    }
+    
+}
